@@ -142,3 +142,80 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// Destructuring
+
+const book = getBook(3);
+book;
+// const author = book.author;
+
+const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+  book;
+
+console.log(author, title, genres);
+
+// const primaryGenre = genres[0];
+// const secondaryGenre = genres[1];
+
+const [primaryGenre, secondaryGenre, ...otherGenres] = genres;
+
+console.log(primaryGenre, secondaryGenre, otherGenres);
+
+const newGenres = [...genres, "epic fantasy"];
+newGenres;
+
+const updatedBook = {
+  ...book,
+  //Adding a new property
+  moviePublicationDate: "2001-12-19",
+  //overwriting an existing property
+  pages: 1210,
+};
+updatedBook;
+
+const getYear = (str) => str.split("-")[0];
+console.log(getYear(publicationDate));
+
+const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${getYear(
+  publicationDate
+)}. The book has ${hasMovieAdaptation ? "" : "not"} been adapted as a movie`;
+summary;
+const pagesRange = pages > 1000 ? "over a thousand" : " less than 1000";
+pagesRange;
+console.log(`The book has ${pagesRange} pages`);
+
+// function getYear(str) {
+//   return str.split("-")[0];
+// }
+
+console.log(true && "Some string");
+console.log(false && "Some string");
+console.log(hasMovieAdaptation && "This book has a movie");
+
+// falsy: 0, '', null
+console.log("mejla" && "Some string");
+console.log(0 && "Some string");
+
+console.log(true || "Some string");
+console.log(false || "Some string");
+
+console.log(book.translations.spanish);
+const spanishTranlation = book.translations.spanish || "NOT TRANSLATED";
+
+spanishTranlation;
+
+console.log(book.reviews?.librarything?.reviewsCount);
+const countWrong = book.reviews.librarything.reviewsCount || "no data";
+countWrong;
+
+const count = book.reviews.librarything.reviewsCount ?? "no data";
+count;
+
+function getTotalReviewCount(book) {
+  const goodreads = book.review?.goodreads?.reviewsCount ?? 0;
+  const librarything = book.review?.librarything?.reviewsCount;
+
+  return goodreads + librarything;
+}
+
+console.log(getTotalReviewCount(book));
