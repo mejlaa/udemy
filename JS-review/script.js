@@ -144,7 +144,7 @@ function getBook(id) {
 }
 
 // Destructuring
-
+/*
 const book = getBook(3);
 book;
 // const author = book.author;
@@ -210,7 +210,8 @@ countWrong;
 
 const count = book.reviews.librarything.reviewsCount ?? "no data";
 count;
-
+*/
+/*
 function getTotalReviewCount(book) {
   const goodreads = book.review?.goodreads?.reviewsCount ?? 0;
   const librarything = book.review?.librarything?.reviewsCount;
@@ -218,4 +219,78 @@ function getTotalReviewCount(book) {
   return goodreads + librarything;
 }
 
-console.log(getTotalReviewCount(book));
+const books = getBooks();
+books;
+//map
+const x = [1, 2, 3, 4].map((el) => el * 2);
+console.log(x);
+
+const titles = books.map((book) => book.title);
+titles;
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewsCount: getTotalReviewCount(book),
+}));
+essentialData;
+
+//filter
+const longBooks = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+longBooks;
+
+const adventureBooks = books
+  .filter((books) => books.genres.includes("adventure"))
+  .map((book) => book.title);
+adventureBooks;
+
+//reduce
+const pagesAllBooks = books.reduce((sum, book) => sum + book.pages, 0);
+pagesAllBooks;
+
+//sort
+const arr = [3, 7, 2, 9, 6];
+const sorted = arr.slice().sort((a, b) => a - b);
+sorted;
+//slice() pravi kopiju niza, bez toga menja se i arr
+
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages);
+
+// 1) add book object to array
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Chamber od Secrets",
+  author: "J.K. Rowling",
+};
+
+const booksAfterAdd = [...books, newBook];
+booksAfterAdd;
+
+// 2) delete book object from array
+const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3); //brisemo knjigu koja ima id 3
+booksAfterDelete;
+
+// 3) update book object in the array
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+  book.id === 1 ? { ...book, pages: 1210 } : book
+);
+booksAfterUpdate;
+*/
+
+// asynchonous js:promises
+import fetch from "node-fetch";
+// fetch("https://jsonplaceholder.typicode.com/todos")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+// console.log("mejla");
+
+// async/await
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data = await res.json();
+  console.log(data);
+}
+getTodos();
